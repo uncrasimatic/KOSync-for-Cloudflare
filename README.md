@@ -21,7 +21,7 @@ This project lets you run your own instead:
 
 - [KOReader](https://github.com/koreader/koreader) and the reference [koreader-sync-server](https://github.com/koreader/koreader-sync-server), whose behaviour defines the protocol.
 - [kosync-conformance](https://github.com/pid1/kosync-conformance) by pid1: the protocol description this server is built from, and the verifier it's tested against (fetched at test time, not bundled).
-- [nperez0111/koreader-sync](https://github.com/nperez0111/koreader-sync), an earlier KOSync server for Cloudflare Workers that inspired this one. This is a separate implementation, not a port.
+- [nperez0111/koreader-sync](https://github.com/nperez0111/koreader-sync), a self-hosted KOSync server (Bun, Hono and SQLite, run with Docker) that inspired this one. This is a separate implementation for Cloudflare Workers, not a port.
 
 Co-developed with Claude Opus 5.5 (Anthropic).
 
