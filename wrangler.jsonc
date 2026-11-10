@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kosync",
+  "main": "src/index.ts",
+  // Bump to a recent date when scaffolding; must not be newer than the installed wrangler supports.
+  "compatibility_date": "2026-10-01",
+
+  // Public API on https://kosync.<your-subdomain>.workers.dev; no per-version preview URLs.
+  "workers_dev": true,
+  "preview_urls": false,
+
+  // Off: invocation logs record request metadata. Enable briefly for debugging with a test account only.
+  "observability": { "enabled": false },
+
+  // Who may create accounts through KOReader's "Register" button (README → Registration):
+  //   "off"       — nobody; accounts only via `npm run user:add` (default if unset or misspelled)
+  //   "allowlist" — only usernames listed in the ALLOWED_NEW_USERS secret
+  //   "open"      — anyone who can reach the URL
+  // Redeploy (`npm run deploy`) after changing it.
+  "vars": { "REGISTRATION": "off" },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "kosync",
+      // From: npx wrangler d1 create kosync --location weur   (any placeholder works for local dev)
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ]
+
+  // Secret (not in this file): AUTH_PEPPER — npx wrangler secret put AUTH_PEPPER. Local: .dev.vars
+}

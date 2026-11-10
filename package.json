@@ -1,0 +1,24 @@
+{
+  "name": "koreader-cloud-sync",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "types": "wrangler types",
+    "db:migrate:local": "wrangler d1 migrations apply kosync --local",
+    "db:migrate:remote": "wrangler d1 migrations apply kosync --remote",
+    "user:add": "node scripts/provision-user.mjs",
+    "conformance": "node scripts/conformance.mjs",
+    "backup": "node scripts/backup.mjs",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.6.1",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0",
+    "wrangler": "^4.159.0"
+  }
+}

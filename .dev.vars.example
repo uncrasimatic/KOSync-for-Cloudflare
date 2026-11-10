@@ -1,0 +1,6 @@
+# Copy to .dev.vars (gitignored). Local-only value; production uses a different secret.
+# Generate: node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+AUTH_PEPPER=replace-with-local-random-value-at-least-32-chars
+
+# Only used when REGISTRATION is "allowlist" (wrangler.jsonc): usernames allowed to self-register.
+ALLOWED_NEW_USERS=

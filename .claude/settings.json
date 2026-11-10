@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run types:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run db:migrate:local:*)",
+      "Bash(npm run conformance:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vitest:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "ask": [
+      "Bash(npm run deploy:*)",
+      "Bash(npm run db:migrate:remote:*)",
+      "Bash(npm run user:add:*)",
+      "Bash(npm run backup:*)",
+      "Bash(npx wrangler:*)",
+      "Bash(wrangler:*)",
+      "Bash(git push:*)",
+      "Bash(gh repo create:*)",
+      "Bash(gh:*)"
+    ],
+    "deny": [
+      "Read(./.dev.vars)",
+      "Read(./backups/**)",
+      "Bash(npx wrangler delete:*)",
+      "Bash(npx wrangler d1 delete:*)",
+      "Bash(gh repo edit:*)",
+      "Bash(gh gist:*)",
+      "Bash(gh repo delete:*)"
+    ]
+  }
+}

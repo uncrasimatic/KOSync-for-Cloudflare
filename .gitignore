@@ -1,0 +1,22 @@
+node_modules/
+.wrangler/
+.cache/
+backups/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.env
+.env.*
+worker-configuration.d.ts
+dist/
+coverage/
+*.sqlite
+*.sqlite3
+*.db
+.DS_Store
+Thumbs.db
+
+# Local working notes (kept on disk, not published)
+PROGRESS.md
+DECISIONS.md
+CLAUDE.local.md
