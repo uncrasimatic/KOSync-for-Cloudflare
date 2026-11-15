@@ -2,7 +2,7 @@
   <img src="images/header.jpg" width="320" alt="An e-reader in space, sending a bookmark to a cloud of books">
 </p>
 
-<h1 align="center">KOReader Cloud Sync</h1>
+<h1 align="center">KOsync for Cloudflare</h1>
 
 <p align="center">
   Your own reading-progress sync server for KOReader, running free on Cloudflare.
@@ -22,7 +22,7 @@
 
 ---
 
-KOReader can keep your place in a book in step across your devices: read a chapter on your e-reader, pick up the same page on your phone. That feature is called **Progress sync**, and it needs a sync server. This project is a small sync server you run yourself, in your own free Cloudflare account. Nothing to install at home, nothing to pay for.
+KOReader can keep your place in a book in step across your devices: read a chapter on your e-reader, pick up the same page on your phone. That progress syncing feature is called **KOSync**, and it needs a sync server. This project is a small sync server you run yourself, in your own free Cloudflare account. Nothing to install at home, nothing to pay for.
 
 - Works with KOReader's built-in Progress sync. Just enter your server's address on each device.
 - Runs on Cloudflare's free plan: one Worker (a small program) and one D1 database.
@@ -32,7 +32,7 @@ KOReader can keep your place in a book in step across your devices: read a chapt
 
 ## Why use this?
 
-KOReader's official sync server has had stability issues in recent months. There are good third-party servers, but using one means trusting someone else with your reading history and their uptime.
+KOReader's official sync server has had stability issues in recent months. They allow users to replace their default with a custom server, and there are good third-party servers out there, but using one means trusting someone else with your reading history and their uptime.
 
 This project lets you run your own instead:
 
