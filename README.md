@@ -360,7 +360,9 @@ To lock everything down again, set `REGISTRATION` back to `"off"` and deploy. Ex
 
 ## Managing accounts
 
-Load your pepper first, as in [step 11](#step-11-create-your-account), then:
+Note that command line user management is not necessary for adding new users if you have configured "allowlist" or "open" registration modes.
+
+To manage via command line: Load your pepper first, as in [step 11](#step-11-create-your-account), then:
 
 ```sh
 npm run user:add -- alice --remote             # create an account (prints a generated password once)
