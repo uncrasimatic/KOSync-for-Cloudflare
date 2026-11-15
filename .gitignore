@@ -25,3 +25,6 @@ CLAUDE.md
 # Full-size image originals (web copies are committed)
 images/project_image.png
 images/repo_icon.png
+
+# Claude Code settings (local only)
+.claude/
