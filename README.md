@@ -151,7 +151,22 @@ Your browser opens on a Cloudflare page. Sign in if asked and click **Allow**. T
 
 (`npx` runs a tool installed in the project folder. Wrangler may also ask whether to share usage data with Cloudflare; answer either way.)
 
-### Step 5: Create the database
+### Step 5: Choose your workers.dev address
+
+Every Cloudflare account gets one free web address ending in `.workers.dev`. The part you choose is called your *subdomain*. Your server will live at `https://kosync.<your-subdomain>.workers.dev`, and you'll type that address into KOReader later. You only set this once per account, and it must exist before the server can go online.
+
+1. Go to [dash.cloudflare.com](https://dash.cloudflare.com) and sign in.
+2. In the left-hand menu, open **Workers & Pages**. In some versions of the dashboard it's inside **Compute** or **Compute (Workers)**.
+3. If you've never used Workers before, Cloudflare shows a welcome screen that asks you to choose a subdomain. If it doesn't, look for **Subdomain** on the right-hand side of the Workers & Pages overview and click **Change**.
+4. Type a name and confirm. Use lower-case letters, numbers and hyphens. **Don't use your real name or anything that identifies you**: the address is public and is recorded in public certificate logs.
+
+If Cloudflare asks you to verify your email address, do that first: it won't put Workers online for an unverified account.
+
+A brand-new subdomain can take a few minutes, occasionally longer, before addresses on it work. Doing this step now means it's usually ready by the time you deploy.
+
+You can change the subdomain later, but your server's address changes with it, so you'd have to update it on every device.
+
+### Step 6: Create the database
 
 ```sh
 npx wrangler d1 create kosync --location weur
@@ -163,7 +178,7 @@ If wrangler asks whether to add the database to your configuration for you, answ
 
 The output includes a line like `"database_id": "1a2b3c4d-..."`. Keep the terminal open; you need that id next.
 
-### Step 6: Put your database id into the settings file
+### Step 7: Put your database id into the settings file
 
 The file `wrangler.jsonc` holds your server's settings. It ships with a placeholder id made of zeros, which you replace with your own.
 
@@ -203,9 +218,9 @@ Find this line:
 "database_id": "00000000-0000-0000-0000-000000000000",
 ```
 
-Replace only the zeros between the quote marks with your id from step 5. Keep the quotes and the comma. Don't save yet.
+Replace only the zeros between the quote marks with your id from step 6. Keep the quotes and the comma. Don't save yet.
 
-### Step 7: Choose who can create accounts
+### Step 8: Choose who can create accounts
 
 In the same file, find this line:
 
@@ -215,7 +230,7 @@ In the same file, find this line:
 
 This controls what KOReader's **Register** button does:
 
-- `"off"`: nobody can register from a device; you create accounts with a command (step 11). The safest choice, and the default.
+- `"off"`: nobody can register from a device; you create accounts with a command (step 12). The safest choice, and the default.
 - `"allowlist"`: only the usernames you list can register from their device, without you running commands for them. Good for a household.
 - `"open"`: anyone who finds your server can create an account. Only for public servers.
 
@@ -223,7 +238,7 @@ If you're unsure, leave it as `"off"`; you can change it any time. [Registration
 
 Now save the file and close the editor.
 
-### Step 8: Create your secret pepper
+### Step 9: Create your secret pepper
 
 The *pepper* is a random secret that the server mixes into every stored password. Even if someone copied your database, they couldn't use or crack the stored passwords without it.
 
@@ -251,7 +266,7 @@ npx wrangler secret list
 
 It must list `AUTH_PEPPER`. If it shows `[]`, run the `secret put` command again (on Windows, make sure you're in Command Prompt).
 
-### Step 9: Create the tables and put your server online
+### Step 10: Create the tables and put your server online
 
 ```sh
 npm run db:migrate:remote
@@ -263,11 +278,11 @@ This sets up the two tables (accounts and reading positions) in your database. A
 npm run deploy
 ```
 
-This uploads the server to Cloudflare. If this is your first Worker, wrangler asks you to choose a *workers.dev subdomain*; it becomes part of your server's address. **Don't use your real name**: the address is public.
+This uploads the server to Cloudflare, at the workers.dev address you chose in [step 5](#step-5-choose-your-workersdev-address). If you skipped that step, wrangler asks you to choose a subdomain now; the same advice applies, so **don't use your real name**.
 
 At the end it prints your server's address, like `https://kosync.your-subdomain.workers.dev`. **Write it down.**
 
-### Step 10: Check it's working
+### Step 11: Check it's working
 
 Open your address with `/healthcheck` on the end in a web browser, for example:
 
@@ -277,7 +292,9 @@ https://kosync.your-subdomain.workers.dev/healthcheck
 
 You should see `{"state":"OK"}`. Your server is live.
 
-### Step 11: Create your account
+If the page doesn't load, and you only set up your subdomain in step 5, wait a few minutes and try again: new subdomains take a little while to start working.
+
+### Step 12: Create your account
 
 <details open>
 <summary><b>If you chose <code>"off"</code>: create the account with a command</b></summary>
@@ -309,10 +326,10 @@ The tool prints a **generated password once**. Save it in your password manager 
 <details>
 <summary><b>If you chose <code>"allowlist"</code>: add your username to the list</b></summary>
 
-Follow [Using the allowlist](#using-the-allowlist), then tap **Register** on your device in step 12 instead of Login.
+Follow [Using the allowlist](#using-the-allowlist), then tap **Register** on your device in step 13 instead of Login.
 </details>
 
-### Step 12: Set up KOReader on each device
+### Step 13: Set up KOReader on each device
 
 1. Open any book in KOReader.
 2. Open the top menu → **Tools** (the wrench icon) → **Progress sync** → **Custom sync server**, and enter your address (for example `https://kosync.your-subdomain.workers.dev`).
@@ -362,7 +379,7 @@ To lock everything down again, set `REGISTRATION` back to `"off"` and deploy. Ex
 
 Note that command line user management is not necessary for adding new users if you have configured "allowlist" or "open" registration modes.
 
-To manage via command line: Load your pepper first, as in [step 11](#step-11-create-your-account), then:
+To manage via command line: Load your pepper first, as in [step 12](#step-12-create-your-account), then:
 
 ```sh
 npm run user:add -- alice --remote             # create an account (prints a generated password once)
@@ -383,7 +400,7 @@ npm install
 npm run deploy
 ```
 
-`git pull` downloads the latest code, `npm install` updates the tools, and `npm run deploy` puts the new version online. Your `wrangler.jsonc` edits are normally kept. If an update also changed that file, `git pull` stops and says your local changes would be overwritten. In that case, note down your database id and registration choice, run `git checkout wrangler.jsonc` to discard your edits, run `git pull` again, then redo steps 6 and 7.
+`git pull` downloads the latest code, `npm install` updates the tools, and `npm run deploy` puts the new version online. Your `wrangler.jsonc` edits are normally kept. If an update also changed that file, `git pull` stops and says your local changes would be overwritten. In that case, note down your database id and registration choice, run `git checkout wrangler.jsonc` to discard your edits, run `git pull` again, then redo steps 7 and 8.
 
 ## Backups and undo
 
@@ -419,7 +436,7 @@ Per account: the username, the password hash, and for each book a document id (a
 No, only reading progress. KOReader's statistics sync uses a separate mechanism (WebDAV/Dropbox) and isn't affected.
 
 **Every login fails with "Unknown server error". What's wrong?**
-The server can't see your pepper. Run `npx wrangler secret list`; if `AUTH_PEPPER` is missing, repeat [step 8](#step-8-create-your-secret-pepper). On Windows, use Command Prompt.
+The server can't see your pepper. Run `npx wrangler secret list`; if `AUTH_PEPPER` is missing, repeat [step 9](#step-9-create-your-secret-pepper). On Windows, use Command Prompt.
 
 **Register says "registration is disabled", but I set up the allowlist.**
 Check that the name matches exactly, including capitals (e-reader keyboards often capitalise the first letter), and that `ALLOWED_NEW_USERS` was added as a **Secret**, not Text (see the warning in [Using the allowlist](#using-the-allowlist)).
